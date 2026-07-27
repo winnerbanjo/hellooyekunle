@@ -20,6 +20,8 @@ export const metadata: Metadata = {
   description: "The digital home of Oyekunle. Documenting the pursuit of excellence across entrepreneurship, technology, creativity and education.",
 };
 
+export const revalidate = 60;
+
 export default function RootLayout({
   children,
 }: Readonly<{
