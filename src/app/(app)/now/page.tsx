@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 import { RichText } from "@/components/RichText";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config });
@@ -36,9 +35,6 @@ export default async function NowPage() {
 
   const pageData = result.docs[0];
 
-  if (!pageData) {
-    notFound();
-  }
 
   return (
     <main className="max-w-3xl mx-auto px-6 md:px-12 pt-32 pb-24">
@@ -52,7 +48,7 @@ export default async function NowPage() {
       <FadeIn delay={0.2} className="mt-8">
         {pageData?.content ? (
           /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-          <RichText data={pageData.content as any} />
+          <RichText data={pageData?.content as any} />
         ) : (
           <>
             <p className="text-xl text-neutral-500 font-light leading-relaxed mb-24 max-w-2xl">

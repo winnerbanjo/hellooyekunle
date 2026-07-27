@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 import { RichText } from "@/components/RichText";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config });
@@ -37,16 +36,13 @@ export default async function AboutPage() {
 
   const pageData = result.docs[0];
 
-  if (!pageData) {
-    notFound();
-  }
 
   return (
     <main className="max-w-4xl mx-auto px-6 md:px-12 pt-32 pb-24">
       <FadeIn>
         <span className="text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-4 block">My Story</span>
         <h1 className="font-serif text-5xl md:text-6xl leading-tight mb-8">
-          {pageData.title || "From taking apart computers in Lagos to building for the world."}
+          {pageData?.title || "From taking apart computers in Lagos to building for the world."}
         </h1>
       </FadeIn>
 
@@ -67,7 +63,7 @@ export default async function AboutPage() {
         <FadeIn>
           {pageData?.content ? (
             /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-            <RichText data={pageData.content as any} />
+            <RichText data={pageData?.content as any} />
           ) : (
             <div className="text-neutral-500 font-light leading-relaxed space-y-4">
               <p>Please log into Payload CMS, go to Pages, and create a page with slug <strong>about</strong> to populate this content.</p>
