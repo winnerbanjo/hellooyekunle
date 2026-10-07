@@ -1,65 +1,35 @@
-import { FadeIn } from "@/components/animations/FadeIn";
-import type { Metadata } from "next";
-import { getPayload } from 'payload';
-import config from '@/payload.config';
-import { RichText } from "@/components/RichText";
+import React from 'react';
+import type { Metadata } from 'next';
+import { CurrentlyCard } from '@/components/ui/CurrentlyCard';
+import { SectionHeader } from '@/components/ui/SectionHeader';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const payload = await getPayload({ config });
-  const result = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'now' } },
-    limit: 1,
-  });
-  const pageData = result.docs[0];
-  if (!pageData) return { title: 'Now | Oyekunle' };
-  
-  return {
-    title: pageData.metaTitle || 'What I am doing now',
-    description: pageData.metaDescription || 'Current focus and priorities.',
-  };
-}
+export const metadata: Metadata = {
+  title: 'Now — Winner Oyekunle',
+  description: 'What Winner Oyekunle is building, reading, thinking about, and obsessing over right now.',
+};
 
-export default async function NowPage() {
-  const payload = await getPayload({ config });
-  
-  const result = await payload.find({
-    collection: 'pages',
-    where: {
-      slug: {
-        equals: 'now',
-      },
-    },
-    limit: 1,
-  });
-
-  const pageData = result.docs[0];
-
-
+export default function NowPage() {
   return (
-    <main className="max-w-3xl mx-auto px-6 md:px-12 pt-32 pb-24">
-      <FadeIn>
-        <span className="text-xs font-semibold uppercase tracking-widest text-neutral-500 mb-4 block">Currently</span>
-        <h1 className="font-serif text-5xl md:text-7xl leading-tight mb-8">
-          {pageData?.title || 'What I am doing now.'}
-        </h1>
-      </FadeIn>
-      
-      <FadeIn delay={0.2} className="mt-8">
-        {pageData?.content ? (
-          /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-          <RichText data={pageData?.content as any} />
-        ) : (
-          <>
-            <p className="text-xl text-neutral-500 font-light leading-relaxed mb-24 max-w-2xl">
-              This is a living page that serves as a public declaration of my current focus, priorities, and projects. If it is not on this list, I am probably saying no to it.
-            </p>
-            <p className="text-neutral-500 font-light leading-relaxed space-y-4 mb-24 max-w-3xl">
-              Please log into Payload CMS, go to Pages, and create a page with slug <strong>now</strong> to populate this content.
-            </p>
-          </>
-        )}
-      </FadeIn>
+    <main className="min-h-screen pt-32 pb-24 bg-[#080808] text-[#F5F3EE]">
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <SectionHeader
+          label="LIVE STATUS"
+          title="WHAT I'M DOING NOW."
+          subtitle="Inspired by Derek Sivers' /now page concept. Updated regularly directly from Lagos."
+          badgeColor="#B8FF3D"
+        />
+
+        <CurrentlyCard className="mb-12" />
+
+        <div className="p-8 rounded-3xl bg-[#111116] border border-white/10 space-y-4 text-sm text-[#999999] font-light leading-relaxed">
+          <p>
+            If you are wondering what my day-to-day focus looks like: 70% goes into engineering and distribution loops for Nile, 20% into customer discovery for Sena and Booq, and 10% documenting the reality on video.
+          </p>
+          <p>
+            If our teams can make commerce and hospitality 10% less chaotic for African merchants this year, that is leverage.
+          </p>
+        </div>
+      </div>
     </main>
   );
 }

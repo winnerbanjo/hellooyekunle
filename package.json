@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
@@ -13,6 +13,7 @@
     "@payloadcms/email-nodemailer": "^3.86.0",
     "@payloadcms/next": "^3.86.0",
     "@payloadcms/richtext-lexical": "^3.86.0",
+    "@sanity/image-url": "^2.1.1",
     "@tailwindcss/typography": "^0.5.20",
     "clsx": "^2.1.1",
     "framer-motion": "^12.42.2",
@@ -20,6 +21,7 @@
     "lucide-react": "^1.26.0",
     "mailtrap": "^4.8.0",
     "next": "16.2.11",
+    "next-sanity": "^13.3.4",
     "next-themes": "^0.4.6",
     "nodemailer": "^9.0.3",
     "payload": "^3.86.0",

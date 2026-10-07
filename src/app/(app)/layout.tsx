@@ -1,26 +1,67 @@
-import type { Metadata } from "next";
-import { Inter, EB_Garamond } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const ebGaramond = EB_Garamond({
-  variable: "--font-eb-garamond",
-  subsets: ["latin"],
-});
+import { Navbar } from "@/components/navigation/Navbar";
+import { Footer } from "@/components/navigation/Footer";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 
 export const metadata: Metadata = {
-  title: "hellooyekunle.com | Building. Learning. Creating.",
-  description: "The digital home of Oyekunle. Documenting the pursuit of excellence across entrepreneurship, technology, creativity and education.",
+  metadataBase: new URL("https://hellooyekunle.com"),
+  title: {
+    default: "Winner Oyekunle Oyebanjo — Founder of Nile",
+    template: "%s | Winner Oyekunle Oyebanjo",
+  },
+  description:
+    "Founder of Nile. Building digital commerce and business-management software for merchants across Africa from Lagos.",
+  keywords: [
+    "Winner Oyekunle Oyebanjo",
+    "Winner Oyebanjo",
+    "Winner Oyekunle",
+    "Founder of Nile",
+    "Nile Africa Technologies",
+    "African technology founder",
+    "Sena",
+    "Booq",
+    "Lagos startup founder",
+  ],
+  authors: [{ name: "Winner Oyekunle Oyebanjo", url: "https://hellooyekunle.com" }],
+  creator: "Winner Oyekunle Oyebanjo",
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: "https://hellooyekunle.com",
+    title: "Winner Oyekunle Oyebanjo — Founder of Nile",
+    description:
+      "Founder of Nile. Building digital commerce and business-management software for merchants across Africa from Lagos.",
+    siteName: "hellooyekunle.com",
+    images: [
+      {
+        url: "/images/hero/winner-hero.png",
+        width: 1200,
+        height: 630,
+        alt: "Winner Oyekunle — Founder × Creator",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Winner Oyekunle — Founder × Creator",
+    description:
+      "Founder building technology companies for African businesses. Creator documenting business from Lagos.",
+    creator: "@winnerbanjo",
+    images: ["/images/hero/winner-hero.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
-export const revalidate = 60;
+export const viewport: Viewport = {
+  themeColor: "#080808",
+  width: "device-width",
+  initialScale: 1,
+};
+
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -30,13 +71,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${ebGaramond.variable} antialiased`}
+      className="antialiased"
       suppressHydrationWarning
     >
-      <body className="min-h-screen bg-background text-foreground font-sans selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black flex flex-col">
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+      <body className="min-h-screen bg-[var(--background)] text-[var(--foreground)] font-sans flex flex-col custom-cursor-active transition-colors duration-200">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <CustomCursor />
           <Navbar />
-          <div className="flex-grow pt-20">
+          <div className="flex-grow">
             {children}
           </div>
           <Footer />

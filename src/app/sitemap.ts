@@ -1,50 +1,57 @@
-import { MetadataRoute } from 'next'
-import { getPayload } from 'payload'
-import config from '@/payload.config'
+import { MetadataRoute } from 'next';
+import { companies } from '@/content/companies';
+import { notes } from '@/content/notes';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const payload = await getPayload({ config })
-  const baseUrl = 'https://hellooyekunle.com'
+export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = 'https://hellooyekunle.com';
+  const currentDate = new Date();
 
-  // Fetch dynamic content
-  const pages = await payload.find({ collection: 'pages', limit: 100 })
-  const journal = await payload.find({ collection: 'journal', where: { status: { equals: 'published' } }, limit: 100 })
-
-  const pageRoutes = pages.docs.map((page) => ({
-    url: `${baseUrl}/${page.slug}`,
-    lastModified: new Date(page.updatedAt),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  }))
-
-  const journalRoutes = journal.docs.map((post) => ({
-    url: `${baseUrl}/journal/${post.slug}`,
-    lastModified: new Date(post.updatedAt),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }))
-
-  // Add static routes
-  const staticRoutes = [
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 1,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 1.0,
     },
     {
-      url: `${baseUrl}/journal`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
+      url: `${baseUrl}/content`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
-      url: `${baseUrl}/newsletter`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      url: `${baseUrl}/story`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/notes`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
       priority: 0.7,
     },
-  ]
+  ];
 
-  return [...staticRoutes, ...pageRoutes, ...journalRoutes]
+  const companyRoutes: MetadataRoute.Sitemap = companies.map((c) => ({
+    url: `${baseUrl}/work/${c.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
+  const noteRoutes: MetadataRoute.Sitemap = notes.map((n) => ({
+    url: `${baseUrl}/notes/${n.slug}`,
+    lastModified: currentDate,
+    changeFrequency: 'monthly',
+    priority: 0.75,
+  }));
+
+  return [...staticRoutes, ...companyRoutes, ...noteRoutes];
 }
