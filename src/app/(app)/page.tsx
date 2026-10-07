@@ -4,7 +4,7 @@ import { LoadingScreen } from '@/components/hero/LoadingScreen';
 import { SimpleHomepage } from '@/components/home/SimpleHomepage';
 
 export const metadata: Metadata = {
-  title: 'Winner Oyebanjo — Founder of Nile',
+  title: 'Winner Oyekunle Oyebanjo — Founder of Nile',
   description: 'Founder of Nile. Building digital commerce and business-management software for African merchants from Lagos.',
 };
 

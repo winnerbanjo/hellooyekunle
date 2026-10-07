@@ -32,7 +32,7 @@ export function Footer() {
   return (
     <footer className="py-8 border-t border-black/[0.06] dark:border-white/[0.08] text-xs font-mono text-neutral-500 bg-[var(--background)]">
       <div className="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <span>Winner Oyebanjo • Founder of Nile • Lagos ({lagosTime})</span>
+        <span>Winner Oyekunle Oyebanjo • Founder of Nile • Lagos ({lagosTime})</span>
         <span>© {new Date().getFullYear()}</span>
       </div>
     </footer>
